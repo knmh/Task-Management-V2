@@ -1,4 +1,8 @@
 import express, { Application, Request, Response } from "express"
+import userRoutes from './routes/userRoutes'
+import authRoutes from './routes/auth.routes'
+import { errorHandler } from './middleware/errorHandler'
+import { notFound } from './middleware/notFound'
 
 
 
@@ -8,6 +12,9 @@ const app: Application = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Routes
+app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/users', userRoutes)
 
 // Health check
 app.get('/health', (req: Request, res: Response) => {
@@ -17,8 +24,9 @@ app.get('/health', (req: Request, res: Response) => {
 // app.use(express.json())     old
 // app.use(express.urlencoded({ extended: true }))     old
 
+app.use(notFound)
+app.use(errorHandler)
 
 
 
-
-export default app
+export default app ;
