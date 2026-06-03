@@ -59,7 +59,6 @@ export class AuthService {
             throw new Error('JWT_ACCESS_SECRET is not defined in environment variables')
         }
 
-        // ✅ راه حل نهایی - استفاده از مقدار ثابت یا as
         return jwt.sign(
             { id: userId },
             jwtSecret,

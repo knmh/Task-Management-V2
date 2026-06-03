@@ -7,9 +7,9 @@
         "start": "node dist/server.js",
         "dev": "nodemon src/server.ts",
         "typeorm": "typeorm-ts-node-commonjs",
-        "migrate:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
-        "migrate:run": "npm run typeorm migration:run -- -d src/data-source.ts",
-        "migrate:revert": "npm run typeorm migration:revert -- -d src/data-source.ts"
+        "migrate:generate": "typeorm-ts-node-commonjs migration:generate src/migrations/InitialMigration -d src/data-source.ts",
+        "migrate:run": "typeorm-ts-node-commonjs migration:run -d src/data-source.ts",
+        "migrate:revert": "typeorm-ts-node-commonjs migration:revert -d src/data-source.ts"
     },
     "author": "",
     "license": "ISC",
@@ -28,7 +28,7 @@
         "@types/dotenv": "^6.1.1",
         "@types/express": "^5.0.6",
         "@types/jsonwebtoken": "^9.0.10",
-        "@types/node": "^25.6.0",
+        "@types/node": "^25.9.1",
         "@types/pg": "^8.20.0",
         "nodemon": "^3.1.14",
         "ts-node": "^10.9.2",

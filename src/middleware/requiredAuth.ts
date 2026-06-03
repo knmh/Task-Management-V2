@@ -14,7 +14,7 @@ export const requiredAuth = async (req: AuthRequest, res: Response, next: NextFu
         }
 
         if (!token) {
-            throw new AppError('شما وارد نشده اید', 401)
+            throw new AppError('You are not logged in', 401)
         }
 
         const decoded = authService.verifyToken(token)
