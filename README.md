@@ -99,25 +99,34 @@ src/
 Base URL: http://localhost:3000/api/v1
 
 ### 1. Authentication (/auth)
-```table
-   POST   /auth/signup   Register a new user (requires username, email, password)
-   POST   /auth/login    Login with email and password, returns a JWT token
-```
-### 2. Users (/users)
 
-   GET    /users           Get all users (any logged-in user)
-   GET    /users/:id       Get a single user
-   POST   /users           Create a user (simple signup) – no auth required
-   PATCH  /users/:id       Update a user
-   DELETE /users/:id       Delete a user (admin only)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/signup` | Register a new user |
+| POST | `/auth/login` | Login, returns JWT |
 
-### 3. Tasks (/tasks)
 
-   GET    /tasks           Get all tasks of the current user
-   GET    /tasks/:id       Get a task (ownership checked)
-   POST   /tasks           Create a new task (owner = current user)
-   PATCH  /tasks/:id       Update a task (owner only)
-   DELETE /tasks/:id       Delete a task (owner only)
+
+
+### 2. Users (`/users`)
+
+| Method | Endpoint | Description | Auth required |
+|--------|----------|-------------|---------------|
+| GET | `/users` | Get all users | ✅ (any logged-in user) |
+| GET | `/users/:id` | Get a single user | ✅ |
+| POST | `/users` | Create a user (simple signup) | ❌ |
+| PATCH | `/users/:id` | Update a user | ✅ |
+| DELETE | `/users/:id` | Delete a user | ✅ (admin only) |
+
+### 3. Tasks (`/tasks`)
+
+| Method | Endpoint | Description | Auth required |
+|--------|----------|-------------|---------------|
+| GET | `/tasks` | Get all tasks of the current user | ✅ |
+| GET | `/tasks/:id` | Get a task (ownership checked) | ✅ |
+| POST | `/tasks` | Create a new task (owner = current user) | ✅ |
+| PATCH | `/tasks/:id` | Update a task (owner only) | ✅ |
+| DELETE | `/tasks/:id` | Delete a task (owner only) | ✅ |
 
    Example request body for creating a task:
    {
