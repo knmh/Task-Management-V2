@@ -68,7 +68,7 @@ cd Task-Management-V2
 ```
    Server runs at http://localhost:3000. Health check: GET /health.
 
-## PROJECT STRUCTURE
+
 
 ## PROJECT STRUCTURE
 
