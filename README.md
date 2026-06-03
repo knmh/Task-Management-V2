@@ -70,6 +70,9 @@ cd Task-Management-V2
 
 ## PROJECT STRUCTURE
 
+## PROJECT STRUCTURE
+
+```tree
 src/
 ├── config/          # Environment variables
 ├── controllers/     # Auth, User, Task, Admin controllers
@@ -83,6 +86,7 @@ src/
 ├── app.ts           # Express app setup
 ├── data-source.ts   # TypeORM database connection
 └── server.ts        # Entry point
+```
 
 ## AUTHENTICATION & AUTHORIZATION
 
