@@ -154,9 +154,9 @@ Base URL: http://localhost:3000/api/v1
 ## MIGRATIONS (OPTIONAL)
 
 - Generate a migration after entity changes:
-  ```bash
+```bash
   npm run migrate:generate
-  ```
+```
 - Run pending migrations:
 ```bash
   npm run migrate:run
