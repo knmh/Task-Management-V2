@@ -1,4 +1,4 @@
-# Task Manager API
+# Task Manager 
 
 A REST API for managing tasks with JWT authentication, role-based access (admin, user, moderator), and admin capabilities to change user roles. Built with Express.js, TypeScript, TypeORM, and PostgreSQL.
 
