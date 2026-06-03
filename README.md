@@ -99,10 +99,10 @@ src/
 Base URL: http://localhost:3000/api/v1
 
 ### 1. Authentication (/auth)
-
+```table
    POST   /auth/signup   Register a new user (requires username, email, password)
    POST   /auth/login    Login with email and password, returns a JWT token
-
+```
 ### 2. Users (/users)
 
    GET    /users           Get all users (any logged-in user)
