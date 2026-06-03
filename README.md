@@ -45,6 +45,7 @@ cd Task-Management-V2
 ```
 ### 3. Create a .env file based on the example below (update values to match your database settings):
 
+```bash
    PORT=3000
    NODE_ENV=development
    DB_HOST=localhost
@@ -53,6 +54,7 @@ cd Task-Management-V2
    DB_PASSWORD=your_password
    DB_NAME=taskmanager
    JWT_ACCESS_SECRET=your_super_secret_key_change_this
+```
 
 ### 4. Run migrations to create database tables:
 
