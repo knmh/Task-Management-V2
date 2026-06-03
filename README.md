@@ -129,6 +129,7 @@ Base URL: http://localhost:3000/api/v1
 | DELETE | `/tasks/:id` | Delete a task (owner only) | ✅ |
 
    Example request body for creating a task:
+   ```bash
    {
      "title": "Learn TypeORM",
      "description": "Read documentation and practice",
@@ -136,7 +137,7 @@ Base URL: http://localhost:3000/api/v1
      "priority": "HIGH",
      "dueDate": "2025-12-31T23:59:59.000Z"
    }
-
+ ```
 
 ### 4. Admin (`/admin`)
 
@@ -153,14 +154,17 @@ Base URL: http://localhost:3000/api/v1
 ## MIGRATIONS (OPTIONAL)
 
 - Generate a migration after entity changes:
+  ```bash
   npm run migrate:generate
-
+  ```
 - Run pending migrations:
+```bash
   npm run migrate:run
-
+```
 - Revert the last migration:
+ ```bash
   npm run migrate:revert
-
+  ```
  > Note: For migrations to work, ensure your database schema is in sync with entities (or start with an empty database). Keep synchronize: false in data-source.ts.
 
 ## FUTURE IMPROVEMENTS
