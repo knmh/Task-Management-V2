@@ -137,11 +137,12 @@ Base URL: http://localhost:3000/api/v1
      "dueDate": "2025-12-31T23:59:59.000Z"
    }
 
-### 4. Admin (/admin)
- ```bash
-   PATCH  /admin/users/:userId/role   Change a user's role (admin only)
-   Example body: { "role": "moderator" }
- ```
+
+### 4. Admin (`/admin`)
+
+| Method | Endpoint | Description | Auth required |
+|--------|----------|-------------|---------------|
+| PATCH | `/admin/users/:userId/role` | Change a user's role | ✅ + `admin` role |
 ## TESTING WITH THUNDER CLIENT / POSTMAN
 
 1. Create a new user: POST /auth/signup
