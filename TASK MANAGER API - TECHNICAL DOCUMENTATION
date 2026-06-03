@@ -1,84 +1,79 @@
-# Task Manager API - Technical Documentation
+==========================
+TASK MANAGER API - TECHNICAL DOCUMENTATION 
+==========================
 
-## 1. Architecture Overview
-
-- **Language:** TypeScript
-- **Framework:** Express 5
-- **ORM:** TypeORM
-- **Database:** PostgreSQL
-
-**Layered Architecture:**
+1. Architecture Overview
+----------------------------
+Language: TypeScript
+Framework: Express 5
+ORM: TypeORM
+Database: PostgreSQL
 
 Layered Architecture:
 [Route] → [Middleware] → [Controller] → [Service] → [Repository (TypeORM)] → [DB]
 
+Layer Descriptions:
+- Route: Defines HTTP method and endpoint.
+- Middleware: Handles authentication (JWT), authorization (roles), and errors.
+- Controller: Receives req/res, calls service, sends response.
+- Service: Contains business logic (ownership checks, password hashing, token generation).
+- Repository: Database interactions via TypeORM.
+- DB: PostgreSQL.
 
-**Layer Descriptions:**
-- **Route:** Defines HTTP method and endpoint.
-- **Middleware:** Handles authentication (JWT), authorization (roles), and errors.
-- **Controller:** Receives req/res, calls service, sends response.
-- **Service:** Contains business logic (ownership checks, password hashing, token generation).
-- **Repository:** Database interactions via TypeORM.
-- **DB:** PostgreSQL.
+2. Data Flow Example (Create a new task)
+----------------------------------------------------------
+1. Client sends: POST /api/v1/tasks
+   Header: Authorization: Bearer <token>
+   Body: { "title": "Learn TypeORM" }
 
-## 2. Data Flow Example (Create a new task)
+2. Route (tasks.routes.ts): router.post('/', requiredAuth, tasksController.create)
 
-1. Client sends: `POST /api/v1/tasks`  
-   Header: `Authorization: Bearer <token>`  
-   Body: `{ "title": "Learn TypeORM" }`
+3. requiredAuth middleware:
+   - Extracts token from Authorization header.
+   - Verifies token using authService.verifyToken().
+   - Adds req.user = { id: decoded.id }.
 
-2. Route (`tasks.routes.ts`):  
-   `router.post('/', requiredAuth, tasksController.create)`
+4. tasksController.create:
+   - Gets userId = req.user.id.
+   - Calls taskService.create(req.body, userId).
 
-3. `requiredAuth` middleware:  
-   - Extracts token from `Authorization` header.  
-   - Verifies token using `authService.verifyToken()`.  
-   - Adds `req.user = { id: decoded.id }`.
+5. tasksService.create:
+   - Creates task object: taskRepository.create({ ...taskData, userId }).
+   - Saves to database: taskRepository.save(task).
 
-4. `tasksController.create`:  
-   - Gets `userId = req.user.id`.  
-   - Calls `taskService.create(req.body, userId)`.
+6. TypeORM generates and executes INSERT query.
 
-5. `tasksService.create`:  
-   - Creates task object: `taskRepository.create({ ...taskData, userId })`.  
-   - Saves to database: `taskRepository.save(task)`.
+7. Response to client: status 201 + task data.
 
-6. TypeORM generates and executes `INSERT` query.
+3. Key Files and Their Responsibilities
+-----------------------------------------
+src/server.ts                 → Initializes database connection and starts server.
+src/app.ts                    → Express setup, middleware registration, route mounting.
+src/data-source.ts            → TypeORM configuration.
+src/config/env.ts             → Loads environment variables from .env.
+src/entities/User.ts          → User model (fields, relations).
+src/entities/Task.ts          → Task model (fields, relations).
+src/services/auth.service.ts  → Signup, login, token verification.
+src/services/tasks.service.ts → Task CRUD with ownership checks.
+src/controllers/auth.controller.ts  → Signup and login endpoints.
+src/controllers/tasks.controller.ts → Task endpoints.
+src/middleware/requiredAuth.ts      → JWT validation, adds req.user.
+src/middleware/requiredRole.ts      → Role-based access control.
+src/middleware/errorHandler.ts      → Global error handler.
+src/utils/catchAsync.ts             → Wraps async controllers to prevent crashes.
 
-7. Response to client: `status 201` + task data.
-
-## 3. Key Files and Their Responsibilities
-
-| File | Responsibility |
-|------|----------------|
-| `src/server.ts` | Initializes database connection and starts server. |
-| `src/app.ts` | Express setup, middleware registration, route mounting. |
-| `src/data-source.ts` | TypeORM configuration. |
-| `src/config/env.ts` | Loads environment variables from `.env`. |
-| `src/entities/User.ts` | User model (fields, relations). |
-| `src/entities/Task.ts` | Task model (fields, relations). |
-| `src/services/auth.service.ts` | Signup, login, token verification. |
-| `src/services/tasks.service.ts` | Task CRUD with ownership checks. |
-| `src/controllers/auth.controller.ts` | Signup and login endpoints. |
-| `src/controllers/tasks.controller.ts` | Task endpoints. |
-| `src/middleware/requiredAuth.ts` | JWT validation, adds `req.user`. |
-| `src/middleware/requiredRole.ts` | Role-based access control. |
-| `src/middleware/errorHandler.ts` | Global error handler. |
-| `src/utils/catchAsync.ts` | Wraps async controllers to prevent crashes. |
-
-## 4. How `catchAsync` Works
-
+4. How catchAsync Works
+-------------------------
 - Wraps async controller functions.
-- If an error occurs, it catches it and passes it to `next(error)`.
-- Without `catchAsync`, async errors would crash the server.
+- If an error occurs, it catches it and passes it to next(error).
+- Without catchAsync, async errors would crash the server.
 
-**Example:**
-```typescript
+Example:
 export const getAll = catchAsync(async (req, res) => {
    const tasks = await taskService.findAll();
    res.json(tasks);
 });
-```
+
 5. How AppError and errorHandler Work
 --------------------------------------
 AppError extends Error {
