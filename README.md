@@ -96,7 +96,7 @@ src/
 
 ## API DOCUMENTATION
 
-Base URL: http://localhost:3000/api/v1
+Base TASK MANAGER API - TECHNICAL DOCUMENTATION
 
 ### 1. Authentication (/auth)
 
