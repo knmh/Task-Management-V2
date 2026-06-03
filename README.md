@@ -94,9 +94,9 @@ src/
 - User roles: user (default), moderator, admin.
 - Use requiredRole('admin', 'moderator') to restrict access.
 
-## API DOCUMENTATION
+## TECHNICAL DOCUMENTATION
 
-Base TASK MANAGER API - TECHNICAL DOCUMENTATION
+https://github.com/knmh/Task-Management-V2/blob/377dc7fd0b27b3268bd7e3ec822b94d6e20a981d/TASK%20MANAGER%20API%20-%20TECHNICAL%20DOCUMENTATION
 
 ### 1. Authentication (/auth)
 
