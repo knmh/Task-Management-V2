@@ -151,7 +151,7 @@ Base TASK MANAGER API - TECHNICAL DOCUMENTATION
 3. For subsequent requests, add header: Authorization: Bearer <your_token>
 4. Test endpoints for /users, /tasks, and /admin.
 
-## MIGRATIONS (OPTIONAL)
+## MIGRATIONS 
 
 - Generate a migration after entity changes:
 ```bash
