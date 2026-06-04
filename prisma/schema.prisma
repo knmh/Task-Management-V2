@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:365365@localhost:5432/taskmanager?schema=public"
+}
+
+model comment {
+  id        Int      @id(map: "PK_0b0e4bbc8415ec426f87f3a88e2") @default(autoincrement())
+  content   String
+  taskId    Int
+  userId    Int
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  task      task     @relation(fields: [taskId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_9fc19c95c33ef4d97d09b72ee95")
+  user      user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_c0354a9a009d3bb45a08655ce3b")
+}
+
+model migrations {
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+}
+
+model task {
+  id          Int       @id(map: "PK_fb213f79ee45060ba925ecd576e") @default(autoincrement())
+  title       String    @db.VarChar
+  description String?   @db.VarChar
+  status      String    @default("PENDING")
+  priority    String    @default("MEDIUM")
+  dueDate     DateTime? @db.Timestamp(6)
+  userId      Int
+  comment     comment[]
+  user        user      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_f316d3fe53497d4d8a2957db8b9")
+}
+
+model user {
+  id       Int       @id(map: "PK_cace4a159ff9f2512dd42373760") @default(autoincrement())
+  username String    @unique(map: "UQ_78a916df40e02a9deb1c4b75edb") @db.VarChar
+  email    String    @unique(map: "UQ_e12875dfb3b1d92d7d7c5377e22") @db.VarChar
+  password String    @db.VarChar
+  role     String    @default("user")
+  comment  comment[]
+  task     task[]
+}
