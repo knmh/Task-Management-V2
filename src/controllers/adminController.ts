@@ -12,7 +12,7 @@ export const adminController = {
         const { role } = req.body
 
         if (!['admin', 'user', 'moderator'].includes(role)) {
-            throw new AppError('نقش نامعتبر است', 400)
+            throw new AppError('Invalid role', 400)
         }
 
         const user = await userRepository.findOne({
@@ -20,7 +20,7 @@ export const adminController = {
         })
 
         if (!user) {
-            throw new AppError('کاربر یافت نشد', 404)
+            throw new AppError('User not found', 404)
         }
 
         user.role = role as UserRole
@@ -28,7 +28,7 @@ export const adminController = {
 
         res.status(200).json({
             status: 'success',
-            message: `نقش کاربر به ${role} تغییر کرد`,
+            message: `User role changed to ${role}`,
             data: { id: user.id, username: user.username, role: user.role }
         })
     })
